@@ -33,10 +33,6 @@ public class LigneDepot {
         return nbExemplaires;
     }
     
-    public String versFichier() {
-        return this.nbExemplaires + ":" + this.getNumero();
-    }
-
     @Override
     public String toString(){
         return "[ " + getNumero() + " " + getNbExemplaires() +  " ]";
