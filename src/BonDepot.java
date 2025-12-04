@@ -77,35 +77,6 @@ public class BonDepot {
         this.nbLignesDepot++;
         return true;
     }
-    
-    public String versFichier() {
-        String separator = System.lineSeparator();
-        StringBuilder sb = new StringBuilder();
-
-        // Ligne 1: Numéro du bon (Ex: 1) [cite: 113, 119]
-        sb.append(this.numeroBon).append(separator); 
-
-        // Ligne 2: Entête: numeroTel:dateEmission:nbLignesDepot (Ex: 061236547890:2025-10-10:2) [cite: 115, 120]
-        sb.append(this.numeroTel)
-          .append(":")
-          .append(this.getDateEmissionBon())
-          .append(":")
-          .append(this.nbLignesDepot)
-          .append(separator); 
-
-        // Lignes suivantes: Liste des lignes de dépôt
-        for (int i = 0; i < this.nbLignesDepot; i++) {
-            // Appelle la méthode versFichier de chaque LigneDepot
-            sb.append(this.lignesDepot[i].versFichier());
-            
-            // Ajoute le séparateur, sauf après la dernière ligne de dépôt.
-            if (i < this.nbLignesDepot - 1) {
-                sb.append(separator);
-            }
-        }
-
-        return sb.toString();
-    }
 
     @Override
     public String toString(){
