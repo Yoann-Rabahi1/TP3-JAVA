@@ -21,7 +21,7 @@ public class LigneDepot {
     // ----------------------------- CONSTRUCTOR
     
     public LigneDepot (
-        String Numero,
+        String numero,
         int    nbreExemplaires   
     ) {
         this.numero          = numero;
