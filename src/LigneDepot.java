@@ -1,45 +1,64 @@
+
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * TP:     3
+ * Class : LigneDepot | Gestion des stocks
+ * Author: Stéphane SINGERY
+ * Group:  INGE-1-APP-BDML2
+ * Date:   2025-11-06
  */
 
-/**
- *
- * @author rabah
- */
+// Import packages
+package com.mycompany.gestiondesstocks;
+
+// Declare class
 public class LigneDepot {
-
-    private String numero;
-    private int nbExemplaires;
-
-    public LigneDepot(String numero, int nbExemplaires){
-        this.numero = numero;
-        this.nbExemplaires = nbExemplaires;
+    
+    // ----------------------------- ATTRIBUTE   
+    
+    protected String numero;
+    protected int    nbreExemplaires;
+    
+    // ----------------------------- CONSTRUCTOR
+    
+    public LigneDepot (
+        String Numero,
+        int    nbreExemplaires   
+    ) {
+        this.numero          = numero;
+        this.nbreExemplaires = nbreExemplaires;
+    }  
+    
+    // ----------------------------- GETTER
+    
+    public String getNumero() {
+        return this.numero;
     }
-
-    public void setNumero(String numero){
-        this.numero = numero;
-    }
-
-    public void setNbExemplaires(int nbExemplaires){
-        this.nbExemplaires = nbExemplaires;
-    }
-
-    public String getNumero(){
-        return numero;
-    }
-
-    public int getNbExemplaires(){
-        return nbExemplaires;
+    public int    getNbreExemplaires() {
+        return this.nbreExemplaires;
     }
     
-    public String versFichier() {
-        return this.nbExemplaires + ":" + this.getNumero();
+    // ----------------------------- SETTER
+    
+    public void setIsbnIssn(String isbnIssn) {
+        this.numero = numero;
+    }    
+    public void setNbreExemplaires(int nbreExemplaires) {
+        this.nbreExemplaires = nbreExemplaires;
     }
-
-    @Override
-    public String toString(){
-        return "[ " + getNumero() + " " + getNbExemplaires() +  " ]";
+    
+    // ----------------------------- METHOD
+    
+    /**
+     * Affiche les éléments de la ligne de dépôt.
+     */
+    public void afficherLigneDepot() {
+        System.out.printf(
+            """
+            - ISBN/ISSN article   : %s
+            - Nombre d'exemplaires: %s
+            """,
+            numero,
+            nbreExemplaires
+        );
     }
-
 }

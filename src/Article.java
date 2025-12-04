@@ -1,79 +1,91 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * TP: 3
+ * Class : Article | Gestion des stocks
+ * Name: Stéphane SINGERY
+ * Group: INGE-1-APP-BDML2
+ * Date: 2025-11-06
  */
 
-/**
- *
- * @author rabah
- */
-import java.time.LocalDate;
+// Import packages
+package com.mycompany.gestiondesstocks;
 
-public abstract class Article {
-
-    private String description;
-    private double prixInitial;
-    private int nbStock;
-
-    public Article(String description, double prixInitial, int nbStock){
-        this.description = description;
-        this.prixInitial = prixInitial;
-        this.nbStock = nbStock;
-    }
-
-    public void setDescription(String description){
-        this.description = description;
-    }
-
-    public void setPrixInitial(double prixInitial){
-        this.prixInitial = prixInitial;
-    }
-
-    public void setNb_stock(int nbStock){
-        this.nbStock = nbStock;
-    }
-
-    public String getDescription(){
-        return description;
-    }
-
-    public double getPrixInitial(){
-        return prixInitial;
-    }
-
-    public int getNbStock(){
-        return nbStock;
-    }
-
-    public abstract String toString();
-
-    public abstract String getNumero();
-
-    public boolean placerApres(Article autreArticle){
-        return this.getNumero().compareTo(autreArticle.getNumero()) > 0;
-    }
-
-    public void ajouter(int quantite){
-        if (quantite > 0){
-            nbStock = nbStock + quantite;
-            System.out.println("Stock mis à jour. Nouvelle quantité : " + this.getNbStock());
-        }else{
-            System.out.println("Erreur la quantité à ajouter doit être positive.");
-        }
-    }
-
-    public boolean retirer(int quantite){
-        if (quantite < 0){
-            nbStock = nbStock - quantite;
-            System.out.println("Stock mis à jour : " + this.getNbStock());
-            return true;
-        }else {
-            System.out.println("Erreur : La quantité à retirer doit être négative");
-            return false;
-        }
-    }
-
-    public abstract double calculerPrix(LocalDate periode);
+// Declare class
+abstract class Article {
     
-    public abstract String versFichier();
+    // ----------------------------- ATTRIBUTE
+    
+    protected String description;
+    protected double prixInitial;
+    protected int    nbreExemplaires;
+    
+    // ----------------------------- CONSTRUCTOR
+    
+    public Article (
+        String description,
+        double prixInitial,
+        int    nbreExemplaires
+    ) {
+        this.description     = description;
+        this.prixInitial     = prixInitial;
+        this.nbreExemplaires = nbreExemplaires;
+    }
+    
+    // ----------------------------- GETTER
+    
+    public String getDescription() {
+        return this.description;
+    }
+    public double getPrixInitial() {
+        return this.prixInitial;
+    }
+    public int    getNbreExemplaires() {
+        return this.nbreExemplaires;
+    }
+    
+    // Facilite la recherche d'un article par son identifiant.
+    public abstract String getNumero();
+    
+    // ----------------------------- SETTER
+    
+    public void setDescription(String description) {
+        this.description     = description;
+    }   
+    public void setPrixInitial(double prixInitial) {
+        this.prixInitial     = prixInitial;
+    }
+    public void setNbreExemplaires(int nbreExemplaires) {
+        this.nbreExemplaires = nbreExemplaires;
+    }
+    
+    // ----------------------------- METHOD
+    
+    /**
+    * Augmente le nombre d'exemplaires. 
+    */
+    public void ajouter(int quantite) {
+        if (quantite > 0) {
+            this.nbreExemplaires = this.nbreExemplaires + quantite;
+        }
+    }
+    
+    /**
+    * Réduit le nombre d'exemplaires.
+    */
+    public void retirer(int quantite) {
+        if (quantite > 0 && quantite <= this.nbreExemplaires) {
+            this.nbreExemplaires = this.nbreExemplaires - quantite;
+        }
+    }
+    
+    /**
+     * Retourne true si un article doit être placé après un autre article,
+     * false autrement, selon l’ordre lexicographique des identifiants.
+     */
+    public boolean placerApres(Article autre) {
+        return this.getNumero().compareTo(autre.getNumero()) > 0;
+    }
+    
+    public abstract String toString();
+    
+    public abstract double calculerPrix();
 }

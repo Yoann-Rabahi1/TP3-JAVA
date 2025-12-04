@@ -1,108 +1,160 @@
+
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * TP:     3
+ * Class : Magazine | Gestion des stocks
+ * Author: Stéphane SINGERY
+ * Group:  INGE-1-APP-BDML2
+ * Date:   2025-11-06
  */
-import java.time.*;
-import java.time.temporal.ChronoUnit;
-import java.util.Locale;
 
-public class Magazine extends Article{
+// Import packages
+package com.mycompany.gestiondesstocks;
+import  java.time.LocalDate;
 
-    private String ISSN;
-    private String periodicite;
-    private LocalDate dateDePublication;
-
-    public Magazine(String description, double prixInitial, int nbStock, String ISSN, String periodicite, LocalDate dateDePublication){
-        super(description, prixInitial, nbStock);
-        this.ISSN = ISSN;
-        this.periodicite = periodicite;
-        this.dateDePublication = dateDePublication;
+// Declare class
+class Magazine extends Article {
+    
+    // ----------------------------- ATTRIBUTE   
+    
+    protected String    issn;
+    protected String    periodicite;
+    protected LocalDate datePublication;
+    
+    // ----------------------------- CONSTRUCTOR
+    
+    public Magazine(
+        String    description,
+        double       prixInitial,
+        int       nbreExemplaires,
+        String    issn,
+        String    periodicite,
+        LocalDate datePublication
+        
+    ) {
+        super(description, prixInitial, nbreExemplaires);
+        this.issn            = issn;
+        this.periodicite     = periodicite;
+        this.datePublication = datePublication;
     }
-
-    public void setISSN(String ISSN){
-        this.ISSN = ISSN;
+    
+    // ----------------------------- GETTER
+    
+    // Superclass "Article"
+    public String getDescription() {
+        return super.getDescription(); 
     }
-
-    public void setPeriodicite(String periodicite){
-        this.periodicite = periodicite;
+    public double getPrixInitial() {
+        return super.getPrixInitial(); 
     }
-
-    public void setDateDePublication(LocalDate dateDePublication){
-        this.dateDePublication = dateDePublication;
+    public int    getNbreExemplaires() {
+        return super.getNbreExemplaires(); 
     }
-
-    public String getISSN(){
-        return ISSN;
+    
+    // Subclass "Magazine"
+    public String    getNumero() {
+        return this.issn; 
+    }   
+    public String    getPeriodicite() {
+        return this.periodicite; 
     }
-
-    public String getPeriodicite(){
-        return periodicite;
+    public LocalDate getDatePublication() {
+        return this.datePublication; 
+    } 
+    
+    // ----------------------------- SETTER
+    
+    // Superclass "Article"
+    public void setDescription(String description) {
+        super.setDescription(description); 
     }
-
-    public LocalDate getDateDePublication(){
-        return dateDePublication;
+    public void setPrixInitial(double prixInitial) {
+        super.setPrixInitial(prixInitial); 
     }
-
+    public void setNbreExemplaires(int getNbreExemplaires) {
+        super.setNbreExemplaires(nbreExemplaires); 
+    }
+    
+    // Subclass "Magazine"
+    public void setNumero(String issn) {
+        this.issn            = issn; 
+    }  
+    public void setPeriodicite(String periodicite) {
+        this.periodicite     = periodicite; 
+    }
+    public void setDatePublication(LocalDate datePublication) {
+        this.datePublication = datePublication; 
+    }
+    
+    // ----------------------------- METHOD / OVERRIDE
+    
     @Override
-    public String getNumero(){
-        return this.ISSN;
-    }
+    /**
+     * Recalcule le prix si un discount s'applique.
+     */
+    public double calculerPrix() {
+        
+        LocalDate dateDuJour = LocalDate.now();
+        double prix = getPrixInitial();
 
+        // -------------------- Hebdomadaire --------------------
+        if (periodicite.equalsIgnoreCase("hebdomadaire")) {
 
-    @Override
-    public double calculerPrix(LocalDate date){
-        double prix = this.getPrixInitial();
-
-        long joursEcoules = ChronoUnit.DAYS.between(this.dateDePublication, date);
-
-        int seuil50percent;
-        int seuil75percent;
-
-        switch (this.periodicite.toLowerCase()){
-            case "hebdomadaire":
-                seuil50percent = 14;
-                seuil75percent = 28;
-                break;
-
-            case "mensuel":
-                seuil50percent = 60;
-                seuil75percent = 120;
-                break;
-
-            case "trimestriel":
-                seuil50percent = 180;
-                seuil75percent = 360;
-                break;
-
-            default:
+            // Si date du jour >= datePublication + 4 semaines → discount de 75%
+            // Si date du jour >= datePublication + 2 semaines → discount de 50%
+            if (dateDuJour.isAfter(datePublication.plusWeeks(4))) {
+                return prix * 0.25;
+            } else if (dateDuJour.isAfter(datePublication.plusWeeks(2))) {
+                return prix * 0.50;
+            } else {
                 return prix;
+            }
+            
         }
 
-        if(joursEcoules > seuil75percent){
-            prix = this.getPrixInitial() * 0.25;
+        // -------------------- Mensuel --------------------
+        if (periodicite.equalsIgnoreCase("mensuel")) {
+
+            // Si date du jour >= datePublication + 4 mois → discount de 75%
+            // Si date du jour >= datePublication + 2 mois → discount de 50%
+            if (dateDuJour.isAfter(datePublication.plusMonths(4))) {
+                return prix * 0.25;
+            } else if (dateDuJour.isAfter(datePublication.plusMonths(2))) {
+                return prix * 0.50;
+            } else {
+                return prix;
+            }
+            
         }
-        else if (joursEcoules > seuil50percent){
-            prix = this.getPrixInitial() * 0.5;
+
+        // -------------------- Trimestriel --------------------
+        if (periodicite.equalsIgnoreCase("trimestriel")) {
+
+            // Si date du jour >= datePublication + 4 trimestres → discount de 75%
+            // Si date du jour >= datePublication + 2 trimestres → discount de 50%
+            if (dateDuJour.isAfter(datePublication.plusMonths(12))) {   
+                return prix * 0.25;
+            } else if (dateDuJour.isAfter(datePublication.plusMonths(6))) { 
+                return prix * 0.50;
+            } else {
+                return prix;
+            }
+            
         }
 
         return prix;
     }
     
     @Override
-    public String versFichier() {
-        String separator = System.lineSeparator();
-        
-        // Ligne 1: ISSN [cite: 102]
-        String ligne1 = this.getNumero() + separator;
-        
-        // Ligne 2: Description:prixInitial:nbStock:periodicite:dateDePublication (yyyy-MM-dd) [cite: 103, 153]
-        String ligne2 = this.getDescription() + ":" + this.getPrixInitial() + ":" + this.getNbStock() + ":" + this.getPeriodicite() + ":" + this.getDateDePublication();
-        
-        return ligne1 + ligne2;
-    }
-
-    @Override
-    public String toString(){
-        return "[" + getDescription() + " " + getPrixInitial() + " " + getNbStock() + " " + getISSN() + " " + getPeriodicite() + " " + getDateDePublication() + "]";
+    /**
+     * Retourne un String composé des attributs du magazine.
+     */
+    public String toString() {
+        return "Magazine :\n"
+            + "  ISSN             : " + issn + "\n"
+            + "  Description      : " + getDescription() + "\n"            
+            + "  Stock            : " + getNbreExemplaires() + "\n"
+            + "  Prix initial     : " + getPrixInitial() + "\n"           
+            + "  Périodicité      : " + periodicite + "\n"
+            + "  Date publication : " + datePublication;
     }
 }

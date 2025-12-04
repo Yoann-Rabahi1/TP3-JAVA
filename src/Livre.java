@@ -1,81 +1,107 @@
+
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * TP:     3
+ * Class : Livre | Gestion des stocks
+ * Author: Stéphane SINGERY
+ * Group:  INGE-1-APP-BDML2
+ * Date:   2025-11-06
  */
 
-/**
- *
- * @author rabah
- */
-import java.time.LocalDate;
-import java.time.Month;
+// Import packages
+package com.mycompany.gestiondesstocks;
 
-public class Livre extends Article{
-
-    private String ISBN;
-    private int nbPages;
-
-    public Livre(String description, double prixInitial, int nb_stock, String ISBN, int nbPages){
-        super(description, prixInitial, nb_stock);
-        this.ISBN = ISBN;
-        this.nbPages = nbPages;
+// Declare class
+class Livre extends Article {
+    
+    // ----------------------------- ATTRIBUTE   
+    
+    protected String isbn;
+    protected int    nbPages; 
+    
+    // ----------------------------- CONSTRUCTOR
+    
+    public Livre(
+        String description,
+        double prixInitial,
+        int    nbreExemplaires,
+        String isbn,
+        int    nbPages
+    ) {
+        super(description, prixInitial, nbreExemplaires);
+        this.isbn    = isbn;
+        this.nbPages = nbPages;        
+    }   
+    
+    // ----------------------------- GETTER
+    
+    // Superclass "Article"
+    public String getDescription() {
+        return super.getDescription(); 
     }
-
-    public void setNbPages(int nbPages){
-        this.nbPages = nbPages;
+    public double getPrixInitial() {
+        return super.getPrixInitial(); 
     }
-
-    public void setISBN(String ISBN){
-        this.ISBN = ISBN;
+    public int    getNbreExemplaires() {
+        return super.getNbreExemplaires(); 
     }
-
-    public String getISBN(){
-        return ISBN;
+    
+    // Subclass "Livre"
+    public String getNumero() {
+        return this.isbn; 
+    }   
+    public int    getNbPages() {
+        return this.nbPages; 
+    } 
+    
+    // ----------------------------- SETTER
+    
+    // Superclass "Article"
+    public void setDescription(String description) {
+        super.setDescription(description); 
     }
-
-    public int getNbPages(){
-        return nbPages;
+    public void setPrixInitial(double prixInitial) {
+        super.setPrixInitial(prixInitial); 
     }
-
+    public void setNbreExemplaires(int getNbreExemplaires) {
+        super.setNbreExemplaires(nbreExemplaires); 
+    }
+    
+    // Subclass "Livre"
+    public void setNumero(String isbn) {
+        this.isbn    = isbn; 
+    }
+    public void setNbPages(int nbPages) {
+        this.nbPages = nbPages; 
+    }
+    
+    // ----------------------------- METHOD / OVERRIDE
+    
     @Override
-    public String getNumero(){
-        return this.ISBN;
-    }
+    /**
+     * Recalcule le prix si discount s'applique.
+     */
+    public double calculerPrix() {
+        // Retourne le numéro du mois d'avril dans l'année.
+        int mois = java.time.LocalDate.now().getMonthValue();
 
-    @Override
-    public double calculerPrix(LocalDate periode){
-        double prix = this.getPrixInitial();
-
-        if (periode.getMonth() == Month.APRIL){
-            prix = prix * 0.5;
+        if (mois == 4) {
+            return getPrixInitial() * 0.5;
+        } else {
+            return getPrixInitial();
         }
-
-        return prix;
-    }
-
-
-
-    @Override
-    public String toString() {
-        return "[" +
-                "description='" + getDescription() + '\'' +
-                ", prixInitial=" + getPrixInitial() +
-                ", nbStock=" + getNbStock() +
-                ", ISBN=" + getISBN() +
-                ", nbPages" + getNbPages() +
-                "]";
     }
     
     @Override
-    public String versFichier() {
-        String separator = System.lineSeparator();
-        
-        // Ligne 1: ISBN [cite: 111]
-        String ligne1 = this.ISBN + separator; 
-        
-        // Ligne 2: Description:prixInitial:nbStock:nbPages
-        String ligne2 = this.getDescription() + ":" + this.getPrixInitial()+ ":" + this.getNbStock() + ":" + this.getNbPages();
-        
-        return ligne1 + ligne2;
+    /**
+     * Retourne un String composé des attributs du livre.
+     */
+    public String toString() {
+        return "Livre :\n"
+            + "  ISBN         : " + isbn + "\n"
+            + "  Description  : " + getDescription() + "\n"
+            + "  Stock        : " + getNbreExemplaires() + "\n"
+            + "  Prix initial : " + getPrixInitial()  + "\n"            
+            + "  Pages        : " + nbPages + "\n";
     }
+    
 }
