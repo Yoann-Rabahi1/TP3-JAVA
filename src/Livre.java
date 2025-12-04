@@ -2,7 +2,7 @@
 /*
  * TP:     3
  * Class : Livre | Gestion des stocks
- * Author: Stéphane SINGERY
+ * Author: Stéphane SINGERY / Yoann Rabahi / Teddy Rakotoarivelo
  * Group:  INGE-1-APP-BDML2
  * Date:   2025-11-06
  */
@@ -34,16 +34,6 @@ class Livre extends Article {
     
     // ----------------------------- GETTER
     
-    // Superclass "Article"
-    public String getDescription() {
-        return super.getDescription(); 
-    }
-    public double getPrixInitial() {
-        return super.getPrixInitial(); 
-    }
-    public int    getNbreExemplaires() {
-        return super.getNbreExemplaires(); 
-    }
     
     // Subclass "Livre"
     public String getNumero() {
@@ -55,16 +45,7 @@ class Livre extends Article {
     
     // ----------------------------- SETTER
     
-    // Superclass "Article"
-    public void setDescription(String description) {
-        super.setDescription(description); 
-    }
-    public void setPrixInitial(double prixInitial) {
-        super.setPrixInitial(prixInitial); 
-    }
-    public void setNbreExemplaires(int getNbreExemplaires) {
-        super.setNbreExemplaires(nbreExemplaires); 
-    }
+
     
     // Subclass "Livre"
     public void setNumero(String isbn) {

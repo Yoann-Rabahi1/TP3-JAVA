@@ -2,7 +2,7 @@
 /*
  * TP:     3
  * Class : Magazine | Gestion des stocks
- * Author: Stéphane SINGERY
+ * Author: Stéphane SINGERY / Yoann Rabahi / Teddy Rakotoarivelo
  * Group:  INGE-1-APP-BDML2
  * Date:   2025-11-06
  */
@@ -39,16 +39,7 @@ class Magazine extends Article {
     
     // ----------------------------- GETTER
     
-    // Superclass "Article"
-    public String getDescription() {
-        return super.getDescription(); 
-    }
-    public double getPrixInitial() {
-        return super.getPrixInitial(); 
-    }
-    public int    getNbreExemplaires() {
-        return super.getNbreExemplaires(); 
-    }
+
     
     // Subclass "Magazine"
     public String    getNumero() {
@@ -63,16 +54,7 @@ class Magazine extends Article {
     
     // ----------------------------- SETTER
     
-    // Superclass "Article"
-    public void setDescription(String description) {
-        super.setDescription(description); 
-    }
-    public void setPrixInitial(double prixInitial) {
-        super.setPrixInitial(prixInitial); 
-    }
-    public void setNbreExemplaires(int getNbreExemplaires) {
-        super.setNbreExemplaires(nbreExemplaires); 
-    }
+
     
     // Subclass "Magazine"
     public void setNumero(String issn) {

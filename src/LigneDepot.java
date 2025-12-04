@@ -2,7 +2,7 @@
 /*
  * TP:     3
  * Class : LigneDepot | Gestion des stocks
- * Author: Stéphane SINGERY
+ * Author: Stéphane SINGERY / Yoann Rabahi / Teddy Rakotoarivelo
  * Group:  INGE-1-APP-BDML2
  * Date:   2025-11-06
  */
