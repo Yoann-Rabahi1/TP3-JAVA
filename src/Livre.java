@@ -53,8 +53,6 @@ public class Livre extends Article{
         return prix;
     }
 
-
-
     @Override
     public String toString() {
         return "[" +
@@ -66,16 +64,4 @@ public class Livre extends Article{
                 "]";
     }
     
-    @Override
-    public String versFichier() {
-        String separator = System.lineSeparator();
-        
-        // Ligne 1: ISBN [cite: 111]
-        String ligne1 = this.ISBN + separator; 
-        
-        // Ligne 2: Description:prixInitial:nbStock:nbPages
-        String ligne2 = this.getDescription() + ":" + this.getPrixInitial()+ ":" + this.getNbStock() + ":" + this.getNbPages();
-        
-        return ligne1 + ligne2;
-    }
 }
