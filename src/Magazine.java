@@ -87,19 +87,6 @@ public class Magazine extends Article{
 
         return prix;
     }
-    
-    @Override
-    public String versFichier() {
-        String separator = System.lineSeparator();
-        
-        // Ligne 1: ISSN [cite: 102]
-        String ligne1 = this.getNumero() + separator;
-        
-        // Ligne 2: Description:prixInitial:nbStock:periodicite:dateDePublication (yyyy-MM-dd) [cite: 103, 153]
-        String ligne2 = this.getDescription() + ":" + this.getPrixInitial() + ":" + this.getNbStock() + ":" + this.getPeriodicite() + ":" + this.getDateDePublication();
-        
-        return ligne1 + ligne2;
-    }
 
     @Override
     public String toString(){
