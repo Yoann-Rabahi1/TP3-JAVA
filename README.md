@@ -1,6 +1,6 @@
-Projet JAVA TP3 | Gestion des Stocks
+### Projet JAVA TP3 | Gestion des stocks
 
-Etudiants :
+#### Etudiants :
 - Yoann RABAHI
 - Teddy RAKOTOARIVELO
 - Stéphane SINGERY
