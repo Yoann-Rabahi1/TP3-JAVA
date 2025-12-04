@@ -1,130 +1,145 @@
+
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * TP:     3
+ * Class : BonDepot | Gestion des stocks
+ * Author: Stéphane SINGERY
+ * Group:  INGE-1-APP-BDML2
+ * Date:   2025-11-06
  */
-import java.time.*;
 
+// Import packages
+package com.mycompany.gestiondesstocks;
+import  java.time.LocalDate;
+
+// Declare class
 public class BonDepot {
-
-    private static int compteur = 0;
-    private final int max_lignes = 12;
-
-    private int numeroBon;
-    private String numeroTel;
-    private LocalDate dateEmissionBon;
-    private LigneDepot[] lignesDepot;
-    private int nbLignesDepot;
-
-    public BonDepot(String numeroTel, LocalDate dateEmissionBon){
-        compteur++;
-        this.numeroBon = compteur;
-
-        this.numeroTel = numeroTel;
-        this.dateEmissionBon = dateEmissionBon;
-
-        this.lignesDepot = new LigneDepot[max_lignes];
-        this.nbLignesDepot = 0;
+    
+    // ----------------------------- ATTRIBUTE   
+    
+    protected String       numeroTelephone;
+    protected LocalDate    dateEmission;
+    protected int          nbArticlesDeposes;
+    protected int          idBonDepot;
+    protected int          nbLignesAutorisees;
+    protected LigneDepot[] tabLignesDepot;
+    
+    // Numérotation des bons de manière unique.
+    private static int compteurBonDepot = 0;
+    
+    // ----------------------------- CONSTRUCTOR
+    
+    public BonDepot(
+        String    numeroTelephone,
+        int       nbArticlesDeposes,
+        int       nbLignesAutorisees
+    ) {
+        this.numeroTelephone    = numeroTelephone;
+        this.dateEmission       = LocalDate.now();
+        this.nbArticlesDeposes  = 0;                 // Le bon dépôt est initialisé avec 0 article.
+        this.idBonDepot         = ++compteurBonDepot;
+        this.nbLignesAutorisees = nbLignesAutorisees;
+        this.tabLignesDepot     = new LigneDepot[nbLignesAutorisees];
     }
     
-    public BonDepot(int numeroBon, String numeroTel, LocalDate dateEmission) {
-        
-        // 1. Initialisation des attributs lus (on force le numeroBon)
-        this.numeroBon = numeroBon;
-        this.numeroTel = numeroTel;
-        this.dateEmissionBon = dateEmission;
-        
-        // 2. Initialisation des attributs internes
-        this.lignesDepot = new LigneDepot[max_lignes];
-        this.nbLignesDepot = 0;
-        
-        // 3. Mise à jour du compteur statique
-        // Ceci garantit que le prochain bon créé aura un numéro qui suit le plus grand numéro chargé.
-        if (numeroBon >= compteur) {
-            compteur = numeroBon;
-        }
+    // ----------------------------- GETTER
+    
+    public String       getNumeroTelephone() {
+        return this.numeroTelephone;
     }
 
-    public void setNumeroBon(int numeroBon){this.numeroBon = numeroBon;}
+    public LocalDate    getDateEmission() {
+        return this.dateEmission;
+    }
 
-    public void setNumeroTel(String numeroTel){this.numeroTel = numeroTel;}
+    public int          getNbArticlesDeposes() {
+        return this.nbArticlesDeposes;
+    }
 
-    public void setDateEmissionBon(LocalDate dateEmissionBon){this.dateEmissionBon = dateEmissionBon;}
+    public LigneDepot[] getTabLignesDepot() {
+        return this.tabLignesDepot;
+    }
 
-    public void setLignesDepot(LigneDepot[] lignesDepot){this.lignesDepot = lignesDepot;}
+    public int          getIdBonDepot() {
+        return this.idBonDepot;
+    }
 
-    public void setNbLignesDepot(int nbLignesDepot){this.nbLignesDepot = nbLignesDepot;}
+    public int          getNbLignesAutorisees() {
+        return this.nbLignesAutorisees;
+    }
 
-    public int getNumeroBon(){return numeroBon;}
+    // ----------------------------- SETTER
+    
+    public void setNumeroTelephone(String numeroTelephone) {
+        this.numeroTelephone    = numeroTelephone;
+    }
 
-    public String getNumeroTel(){return numeroTel;}
+    public void setDateEmission(LocalDate dateEmission) {
+        this.dateEmission       = dateEmission;
+    }
 
-    public LocalDate getDateEmissionBon(){return dateEmissionBon;}
+    public void setNbArticlesDeposes(int nbArticlesDeposes) {
+        this.nbArticlesDeposes  = nbArticlesDeposes;
+    }
 
-    public LigneDepot[] getLignesDepot(){return lignesDepot;}
+    public void setTabLignesDepot(LigneDepot[] tabLignesDepot) {
+        this.tabLignesDepot     = tabLignesDepot;
+    }
 
-    public int getNbLignesDepot(){return nbLignesDepot;}
+    public void setIdBonDepot(int idBonDepot) {
+        this.idBonDepot         = idBonDepot;
+    }
 
-    public boolean ajouterLigne(String numero, int nbExemplaireDepose){
-        if(this.nbLignesDepot >= max_lignes){
-            System.out.println("Erreur : le bon de dépôt est plein.");
-            return false;
+    public void setNbLignesAutorisees(int nbLignesAutorisees) {
+        this.nbLignesAutorisees = nbLignesAutorisees;
+    }
+
+    
+    // ----------------------------- METHOD
+    
+    /**
+     * Afficher les éléments du bon de dépôt.
+     */
+    public void afficherBonDepot() {
+        System.out.printf(
+            """
+            - Bon de dépôt n°   : %s
+            - Téléphone         : %s
+            - Date d'émission   : %s
+            - Nb articles déposé: %s
+            - Lignes autorisées : %s
+            - Lignes de dépôt   : %s
+            """, 
+            idBonDepot,
+            numeroTelephone,
+            dateEmission,
+            nbArticlesDeposes,
+            nbLignesAutorisees
+        );
+             
+        for (int i = 0; i < nbArticlesDeposes; i++) {
+            tabLignesDepot[i].afficherLigneDepot();
         }
-
-        LigneDepot nouvelleLigne = new LigneDepot(numero, nbExemplaireDepose);
-
-        this.lignesDepot[this.nbLignesDepot] = nouvelleLigne;
-
-        this.nbLignesDepot++;
-        return true;
     }
     
-    public String versFichier() {
-        String separator = System.lineSeparator();
-        StringBuilder sb = new StringBuilder();
+    /**
+    * Ajoute une ligne de dépôt en donnant le numéro ISBN / ISSN
+    * et le nombre d'exemplaires déposés.
+    */
+    public void ajouterLigne(String isbnIssn, int quantite) {
 
-        // Ligne 1: Numéro du bon (Ex: 1) [cite: 113, 119]
-        sb.append(this.numeroBon).append(separator); 
+        if (nbArticlesDeposes < nbLignesAutorisees) {
 
-        // Ligne 2: Entête: numeroTel:dateEmission:nbLignesDepot (Ex: 061236547890:2025-10-10:2) [cite: 115, 120]
-        sb.append(this.numeroTel)
-          .append(":")
-          .append(this.getDateEmissionBon())
-          .append(":")
-          .append(this.nbLignesDepot)
-          .append(separator); 
+            LigneDepot ligne = new LigneDepot(isbnIssn, quantite);
 
-        // Lignes suivantes: Liste des lignes de dépôt
-        for (int i = 0; i < this.nbLignesDepot; i++) {
-            // Appelle la méthode versFichier de chaque LigneDepot
-            sb.append(this.lignesDepot[i].versFichier());
-            
-            // Ajoute le séparateur, sauf après la dernière ligne de dépôt.
-            if (i < this.nbLignesDepot - 1) {
-                sb.append(separator);
-            }
+            tabLignesDepot[nbArticlesDeposes] = ligne;
+            nbArticlesDeposes++;
+
+        } else {
+            System.out.println("🟠 Nombre de lignes autorisées atteint.");
         }
-
-        return sb.toString();
     }
 
-    @Override
-    public String toString(){
-        StringBuilder sb = new StringBuilder();
-
-        // Entête du bon de dépôt
-        sb.append("Bon n° ").append(getNumeroBon());
-        sb.append(" - Client : ").append(getNumeroTel());
-        sb.append(" - Date : ").append(getDateEmissionBon());
-        sb.append(" (").append(getNbLignesDepot()).append(" articles)\n");
-        sb.append("Détail des lignes de dépôt :\n");
-
-        // Ajout des lignes de dépôt
-        for (int i = 0; i < this.nbLignesDepot; i++) {
-            // Utilise le toString() de LigneDepot
-            sb.append("  - ").append(lignesDepot[i].toString()).append("\n");
-        }
-
-        return sb.toString();
-    }
-
+  
 }
+
+

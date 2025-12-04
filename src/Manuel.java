@@ -1,75 +1,126 @@
+
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * TP:     3
+ * Class : Manuel | Gestion des stocks
+ * Author: Stéphane SINGERY
+ * Group:  INGE-1-APP-BDML2
+ * Date:   2025-11-06
  */
 
-/**
- *
- * @author rabah
- */
+// Import packages
+package com.mycompany.gestiondesstocks;
 
-import java.time.LocalDate;
-import java.time.Month;
-
-public class Manuel extends Livre{
-
-    private String matiere;
-    private String niveauScolaire;
-
-    public Manuel(String description,
-                  double prixInitial, int nb_stock,
-                  String ISBN, int nbPages,
-                  String matiere, String niveauScolaire){
-        super(description, prixInitial, nb_stock, ISBN, nbPages);
-
-        this.matiere = matiere;
-        this.niveauScolaire = niveauScolaire;
+// Declare class
+class Manuel extends Article {
+    
+    // ----------------------------- ATTRIBUTE   
+    
+    protected String isbn;
+    protected int    nbPages;
+    protected String matiereEnseignee;
+    protected String niveauScolaire;
+    
+    // ----------------------------- CONSTRUCTOR
+    
+    public Manuel(
+        String description,
+        double prixInitial,
+        int    nbreExemplaires,
+        String isbn,
+        int    nbPages,
+        String matiereEnseignee,
+        String niveauScolaire
+    ) {
+        super(description, prixInitial, nbreExemplaires);
+        this.isbn             = isbn;
+        this.nbPages          = nbPages;   
+        this.matiereEnseignee = matiereEnseignee;
+        this.niveauScolaire   = niveauScolaire;
+    }   
+    
+    // ----------------------------- GETTER
+    
+    // Superclass "Article"
+    public String getDescription() {
+        return super.getDescription(); 
     }
-
-    public void setMatiere(String matiere){
-        this.matiere = matiere;
+    public double getPrixInitial() {
+        return super.getPrixInitial(); 
     }
-
-    public void setNiveauScolaire(String niveauScolaire){
-        this.niveauScolaire = niveauScolaire;
+    public int    getNbreExemplaires() {
+        return super.getNbreExemplaires(); 
     }
-
-    public String getMatiere(){
-        return matiere;
+    
+    // Subclass "Manuel"
+    public String getNumero() {
+        return this.isbn; 
+    }   
+    public int    getNbPages() {
+        return this.nbPages; 
     }
-
-    public String getNiveauScolaire(){
-        return niveauScolaire;
+    public String getMatiereEnseignee() {
+        return this.matiereEnseignee; 
     }
-
+    public String getNiveauScolaire() {
+        return this.niveauScolaire; 
+    } 
+    
+    // ----------------------------- SETTER
+    
+    // Superclass "Article"
+    public void setDescription(String description) {
+        super.setDescription(description); 
+    }
+    public void setPrixInitial(double prixInitial) {
+        super.setPrixInitial(prixInitial); 
+    }
+    public void setNbreExemplaires(int getNbreExemplaires) {
+        super.setNbreExemplaires(nbreExemplaires); 
+    }
+    
+    // Subclass "Manuel"
+    public void setNumero(String isbn) {
+        this.isbn             = isbn; 
+    }  
+    public void setNbPages(int nbPages) {
+        this.nbPages          = nbPages; 
+    }
+    public void setMatiereEnseignee(String matiereEnseignee) {
+        this.matiereEnseignee = matiereEnseignee; 
+    }
+    public void setNiveauScolaire(String niveauScolaire) {
+        this.niveauScolaire   = niveauScolaire; 
+    }
+    
+    // ----------------------------- METHOD / OVERRIDE
+    
     @Override
-    public double calculerPrix(LocalDate periode){
-        double prix = this.getPrixInitial();
+    /**
+     * Recalcule le prix si un discount s'applique.
+     */
+    public double calculerPrix() {
+        // Retourne le numéro du mois d'avril dans l'année.
+        int mois = java.time.LocalDate.now().getMonthValue();
 
-        if (periode.getMonth() == Month.APRIL){
-            prix = prix * 0.5;
+        if (mois == 4) {
+            return getPrixInitial() * 0.5;
+        } else {
+            return getPrixInitial();
         }
-
-        return prix;
     }
     
     @Override
-    public String versFichier() {
-        String separator = System.lineSeparator();
-        
-        // Ligne 1: ISBN
-        String ligne1 = this.getNumero() + separator; 
-        
-        // Ligne 2: Description:prixInitial:nbStock:nbPages:matiere:niveauScolaire
-        String ligne2 = this.getDescription() + ":" + this.getPrixInitial() + ":" + this.getNbStock() + ":" + this.getNbPages() + ":" + this.getMatiere() + ":" + this.getNiveauScolaire();
-        
-        return ligne1 + ligne2;
-    }
-
-    @Override
-    public String toString(){
-        return super.toString() +
-                ", matière =" + getMatiere() + ", " +
-                " niveauScolaire =" + getNiveauScolaire() +" ]";
+    /**
+     * Retourne un String composé des attributs du manuel.
+     */
+    public String toString() {
+        return "Manuel :\n"
+            + "  ISBN            : " + isbn + "\n"
+            + "  Description     : " + getDescription() + "\n"            
+            + "  Stock           : " + getNbreExemplaires() + "\n"
+            + "  Prix initial    : " + getPrixInitial() + "\n"           
+            + "  Pages           : " + nbPages + "\n"
+            + "  Matière         : " + matiereEnseignee + "\n"
+            + "  Niveau scolaire : " + niveauScolaire;
     }
 }
