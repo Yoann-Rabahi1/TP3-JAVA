@@ -54,19 +54,6 @@ public class Manuel extends Livre{
     }
     
     @Override
-    public String versFichier() {
-        String separator = System.lineSeparator();
-        
-        // Ligne 1: ISBN
-        String ligne1 = this.getNumero() + separator; 
-        
-        // Ligne 2: Description:prixInitial:nbStock:nbPages:matiere:niveauScolaire
-        String ligne2 = this.getDescription() + ":" + this.getPrixInitial() + ":" + this.getNbStock() + ":" + this.getNbPages() + ":" + this.getMatiere() + ":" + this.getNiveauScolaire();
-        
-        return ligne1 + ligne2;
-    }
-
-    @Override
     public String toString(){
         return super.toString() +
                 ", matière =" + getMatiere() + ", " +
