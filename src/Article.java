@@ -75,5 +75,4 @@ public abstract class Article {
 
     public abstract double calculerPrix(LocalDate periode);
     
-    public abstract String versFichier();
 }
